@@ -1,0 +1,64 @@
+diff --git a/.github/workflows/release-with-changesets.yml b/../generator/.github/workflows/release-with-changesets.yml
+index a5a7cf6..80b854a 100644
+--- a/.github/workflows/release-with-changesets.yml
++++ b/../generator/.github/workflows/release-with-changesets.yml
+@@ -14,69 +14,69 @@ on:
+       - next
+ 
+ jobs:
+   release:
+     name: Publish to any of NPM, GitHub, or Docker Hub
+-    if: startsWith(github.event.commits[0].message , 'release:')
+     runs-on: ubuntu-latest
+     permissions:
+       contents: write
+@@ -88,7 +88,7 @@ jobs:
+           git config --global core.autocrlf false
+           git config --global core.eol lf
+       - name: Checkout repository
+-        uses: actions/checkout@v6
++        uses: actions/checkout@v4
+       - name: Check if Node.js project and has package.json
+         id: packagejson
+         run: test -e ./package.json && echo "exists=true" >> $GITHUB_OUTPUT || echo "exists=false" >> $GITHUB_OUTPUT
+@@ -96,12 +96,12 @@ jobs:
+       - if: steps.packagejson.outputs.exists == 'true'
+         name: Check package-lock version
+         uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master
+-        id: lockversion
+         with:
+           node-version: ${{ vars.NODE_VERSION }}
++        id: lockversion
+       - if: steps.packagejson.outputs.exists == 'true'
+         name: Setup Node.js
+-        uses: actions/setup-node@v6
++        uses: actions/setup-node@v4
+         with:
+           node-version: "${{ steps.lockversion.outputs.version }}"
+       - if: steps.packagejson.outputs.exists == 'true'
+@@ -113,14 +113,13 @@ jobs:
+         shell: bash
+         # This step can be removed once the issue is fixed in the changeset package.
+         run: npm install @changesets/changelog-git@0.2.0
+-
+       - if: steps.packagejson.outputs.exists == 'true'
+         name: Publish to any of NPM, Github, and Docker Hub
+         #this step has 2 goals, it is either identifying that there is changeset file created and then this action creates a PR with version bump that will trigger release - or if it sees there is no changeset, and there are versions changes in package.json files, it publish new versions to NPM is they are not there yet
+-        uses: changesets/action@e0145edc7d9d8679003495b11f87bd8ef63c0cba # v1.5.3
++        uses: changesets/action@v1
+         id: release
+         with:
+-          version: npm run bump:version
++          version: npx -p @changesets/cli@2.27.7 changeset version
+           commit: "chore(release): release and bump versions of packages"
+           title: "chore(release): release and bump versions of packages"
+           publish: npx -p @changesets/cli@2.27.7 changeset publish
+@@ -133,7 +132,7 @@ jobs:
+           GIT_COMMITTER_EMAIL: info@asyncapi.io
+       - if: failure() # Only, on failure, send a message on the 94_bot-failing-ci Slack channel
+         name: Report workflow run status to Slack
+-        uses: 8398a7/action-slack@fbd6aa58ba854a740e11a35d0df80cb5d12101d8 # v3.15.1
++        uses: 8398a7/action-slack@v3
+         with:
+           status: ${{ job.status }}
+           fields: repo,action,workflow
