@@ -114,20 +114,13 @@ jobs:
         # This step can be removed once the issue is fixed in the changeset package.
         run: npm install @changesets/changelog-git@0.2.0
 
-      - name: Debug NPM configuration
-        if: steps.packagejson.outputs.exists == 'true'
-        run: |
-          npm config ls -l
-          echo .npmrc file:
-          cat ~/.npmrc
-
       - if: steps.packagejson.outputs.exists == 'true'
         name: Publish to any of NPM, Github, and Docker Hub
         #this step has 2 goals, it is either identifying that there is changeset file created and then this action creates a PR with version bump that will trigger release - or if it sees there is no changeset, and there are versions changes in package.json files, it publish new versions to NPM is they are not there yet
         uses: changesets/action@e0145edc7d9d8679003495b11f87bd8ef63c0cba # v1.5.3
         id: release
         with:
-          version: npm run bump:version
+          version: npx -p @changesets/cli@2.27.7 changeset version
           commit: "chore(release): release and bump versions of packages"
           title: "chore(release): release and bump versions of packages"
           publish: npx -p @changesets/cli@2.27.7 changeset publish
