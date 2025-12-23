@@ -104,6 +104,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: "${{ steps.lockversion.outputs.version }}"
+          registry-url: "https://registry.npmjs.org"
       - if: steps.packagejson.outputs.exists == 'true'
         name: Install dependencies
         shell: bash
@@ -131,6 +132,7 @@ jobs:
           npx -p @changesets/cli@2.27.7 changeset publish --verbose
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
 
       # - if: steps.packagejson.outputs.exists == 'true'
       #   name: Publish to any of NPM, Github, and Docker Hub
