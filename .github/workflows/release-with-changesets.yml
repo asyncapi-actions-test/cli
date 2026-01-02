@@ -124,9 +124,7 @@ jobs:
           version: npm run bump:version
           commit: "chore(release): release and bump versions of packages"
           title: "chore(release): release and bump versions of packages"
-          publish: |
-            echo "Working around changesets publish failure"; publish: VERSION=$(node -p "require('./package.json').version"); PACKAGE_NAME=$(node -p "require('./package.json').name"); npm view "$PACKAGE_NAME@$VERSION" >/dev/null 2>&1 && echo "Version $VERSION of $PACKAGE_NAME already published, skipping" || npm publish --provenance
-          setupGitUser: false
+          publish: npm run publish:trusted
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           GIT_AUTHOR_NAME: ash17290
