@@ -6,3 +6,4 @@
 |4|Failure|[Run Link](https://github.com/asyncapi-actions-test/cli/actions/runs/20467908818/job/58816093663) | Same error. This time even version command is same as generator workflow seen in [diff_2.patch](./diff_2.patch) |
 |5|Failure|[Run Link](https://github.com/asyncapi-actions-test/cli/actions/runs/20468077628/job/58816657453) | Same error. Added debug steps.|
 |6|Failure|[Run Link](https://github.com/asyncapi-actions-test/cli/actions/runs/20659384380) | Changed package name and author to match the org. Didn't work still.|
+|7|Failure|[Run Link](https://github.com/asyncapi-actions-test/cli/actions/runs/20659656767)|Unset NODE_AUTH_TOKEN in the workflow, and cat the .npmrc file|
