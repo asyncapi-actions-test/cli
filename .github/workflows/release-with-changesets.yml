@@ -126,6 +126,7 @@ jobs:
           title: "chore(release): release and bump versions of packages"
           # Working around changesets action not supporting OIDC yet. Need to pass successful release output for triggering github release
           publish: npm run publish:trusted
+          setupGitUser: false
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           GIT_AUTHOR_NAME: ash17290
