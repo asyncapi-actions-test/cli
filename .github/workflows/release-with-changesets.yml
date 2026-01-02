@@ -129,9 +129,12 @@ jobs:
       - name: Publish with debug
         run: |
           npm config set loglevel verbose
+          echo "NPMRC Config:"
+          cat /home/runner/work/_temp/.npmrc || echo ".npmrc file does not exist"
           npx -p @changesets/cli@2.27.7 changeset publish --verbose
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          NODE_AUTH_TOKEN: ''
           NPM_CONFIG_PROVENANCE: true
 
       # - if: steps.packagejson.outputs.exists == 'true'
