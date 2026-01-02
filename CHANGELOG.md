@@ -1,5 +1,11 @@
 # trusted-publishing-test_asyncapi-cli
 
+## 5.1.0
+
+### Minor Changes
+
+- 41d5d66: Test release with just npm publish
+
 ## 5.0.0
 
 ### Major Changes
