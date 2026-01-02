@@ -1,5 +1,11 @@
 # trusted-publishing-test_asyncapi-cli
 
+## 5.3.0
+
+### Minor Changes
+
+- 08e5ffd: Testing again
+
 ## 5.2.0
 
 ### Minor Changes
