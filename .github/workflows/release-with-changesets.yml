@@ -133,7 +133,7 @@ jobs:
           npm config set loglevel verbose
           echo "NPMRC Config:"
           cat /home/runner/work/_temp/.npmrc || echo ".npmrc file does not exist"
-          npx -p @changesets/cli@2.27.7 changeset publish --verbose
+          npm publish --access=public
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_CONFIG_PROVENANCE: true
