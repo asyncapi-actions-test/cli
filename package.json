@@ -1,8 +1,8 @@
 {
-  "name": "trusted-publishing-test_asyncapi-cli",
+  "name": "@asyncapi-actions-test/trusted-publishing-test_asyncapi-cli",
   "description": "All in one CLI for all AsyncAPI tools",
   "version": "5.0.0",
-  "author": "@action-test-ash17290",
+  "author": "@asyncapi-actions-test",
   "bin": {
     "asyncapi": "./bin/run_bin"
   },
