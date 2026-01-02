@@ -9,3 +9,4 @@
 |7|Failure|[Run Link](https://github.com/asyncapi-actions-test/cli/actions/runs/20659656767)|Unset NODE_AUTH_TOKEN in the workflow, and cat the .npmrc file|
 |8|Failure|[Run Link](https://github.com/asyncapi-actions-test/cli/actions/runs/20659823886)|Tried to unset token and reset npmrc file itself|
 |9|Success|[Run Link](https://github.com/asyncapi-actions-test/cli/actions/runs/20659869616/job/59319895696)|Finally worked when I stopped using changeset publish and used npm publish directly.|
+|10|Success|[Run Link](https://github.com/asyncapi-actions-test/cli/actions/runs/20662100505) and [Run Link](https://github.com/asyncapi-actions-test/cli/actions/runs/20662125274/job/59326782702)| Added as another step. Github releases not working with this.|
