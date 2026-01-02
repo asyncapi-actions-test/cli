@@ -124,6 +124,7 @@ jobs:
           version: npm run bump:version
           commit: "chore(release): release and bump versions of packages"
           title: "chore(release): release and bump versions of packages"
+          # Working around changesets action not supporting OIDC yet. Need to pass successful release output for triggering github release
           publish: npm run publish:trusted
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -132,16 +133,16 @@ jobs:
           GIT_COMMITTER_NAME: ash17290
           GIT_COMMITTER_EMAIL: shurtugal3023@gmail.com
 
-      # - name: Publish to NPM directly (skip if version already published)
-      #   if: steps.packagejson.outputs.exists == 'true' && steps.release.outputs.hasChangesets == 'false'
-      #   shell: bash
-      #   run: |
-      #     # Check if the version in package.json is already published
-      #     VERSION=$(node -p "require('./package.json').version")
-      #     PACKAGE_NAME=$(node -p "require('./package.json').name")
-      #     if npm view "$PACKAGE_NAME@$VERSION" > /dev/null 2>&1; then
-      #       echo "Version $VERSION of package $PACKAGE_NAME is already published. Skipping publish."
-      #     else
-      #       echo "Publishing version $VERSION of package $PACKAGE_NAME to NPM."
-      #       npm publish --provenance
-      #     fi
+      - name: Publish to NPM directly (skip if version already published)
+        if: steps.packagejson.outputs.exists == 'true' && steps.release.outputs.hasChangesets == 'false'
+        shell: bash
+        run: |
+          # Check if the version in package.json is already published
+          VERSION=$(node -p "require('./package.json').version")
+          PACKAGE_NAME=$(node -p "require('./package.json').name")
+          if npm view "$PACKAGE_NAME@$VERSION" > /dev/null 2>&1; then
+            echo "Version $VERSION of package $PACKAGE_NAME is already published. Skipping publish."
+          else
+            echo "Publishing version $VERSION of package $PACKAGE_NAME to NPM."
+            npm publish --provenance
+          fi
