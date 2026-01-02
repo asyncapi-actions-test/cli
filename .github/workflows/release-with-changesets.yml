@@ -128,11 +128,11 @@ jobs:
 
       - name: Publish with debug
         run: |
+          unset NODE_AUTH_TOKEN
+          echo "registry=https://registry.npmjs.org/" > /home/runner/work/_temp/.npmrc
           npm config set loglevel verbose
           echo "NPMRC Config:"
           cat /home/runner/work/_temp/.npmrc || echo ".npmrc file does not exist"
-          unset NODE_AUTH_TOKEN
-          echo "registry=https://registry.npmjs.org/" > /home/runner/work/_temp/.npmrc
           npx -p @changesets/cli@2.27.7 changeset publish --verbose
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
