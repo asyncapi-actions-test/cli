@@ -19,36 +19,36 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: ubuntu-latest
-            npm_script: pack:linux
-            dist_folder: deb
-            extension: deb
-          - os: ubuntu-latest
-            npm_script: pack:tarballs
-            dist_folder: tar
-            extension: tar.gz
+          # - os: ubuntu-latest
+          #   npm_script: pack:linux
+          #   dist_folder: deb
+          #   extension: deb
+          # - os: ubuntu-latest
+          #   npm_script: pack:tarballs
+          #   dist_folder: tar
+          #   extension: tar.gz
           - os: ubuntu-latest
             npm_script: pack:tarballs:alpine
             dist_folder: tar
             extension: alpine.tar.gz
             container: 'node:20-alpine'
             alpine: true
-          - os: ubuntu-latest
-            npm_script: pack:windows
-            dist_folder: win32
-            extension: x64.exe
-          - os: ubuntu-latest
-            npm_script: pack:windows
-            dist_folder: win32
-            extension: x86.exe
-          - os: macos-latest
-            npm_script: pack:macos
-            dist_folder: macos
-            extension: arm64.pkg
-          - os: macos-latest
-            npm_script: pack:macos
-            dist_folder: macos
-            extension: x64.pkg
+          # - os: ubuntu-latest
+          #   npm_script: pack:windows
+          #   dist_folder: win32
+          #   extension: x64.exe
+          # - os: ubuntu-latest
+          #   npm_script: pack:windows
+          #   dist_folder: win32
+          #   extension: x86.exe
+          # - os: macos-latest
+          #   npm_script: pack:macos
+          #   dist_folder: macos
+          #   extension: arm64.pkg
+          # - os: macos-latest
+          #   npm_script: pack:macos
+          #   dist_folder: macos
+          #   extension: x64.pkg
     
     container: ${{ matrix.container }}
     
@@ -60,6 +60,13 @@ jobs:
 
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      # Needed to avoid "fatal: detected dubious ownership in repository" error when using alpine container
+      - name: Mark GitHub workspace as safe
+        if: matrix.container == 'node:20-alpine'
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
       
       - name: Check package-lock version
         if: matrix.container == ''
