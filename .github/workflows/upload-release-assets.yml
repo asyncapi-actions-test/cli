@@ -70,7 +70,7 @@ jobs:
       - name: Install dependencies in Alpine
         if: matrix.container == 'node:20-alpine'
         run: |
-          apk add --no-cache git python3 make g++
+          apk add --no-cache bash git python3 make g++
       
       - if: matrix.npm_script == 'pack:windows'
         name: install nodejs for windows
