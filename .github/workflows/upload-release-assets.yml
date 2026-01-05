@@ -53,6 +53,11 @@ jobs:
     container: ${{ matrix.container }}
     
     steps:
+      - name: Install base tools for alpine container
+        if: matrix.container == 'node:20-alpine'
+        run: |
+          apk add --no-cache bash git python3 make g++
+
       - name: Checkout repository
         uses: actions/checkout@v4
       
@@ -66,11 +71,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "${{ steps.lockversion.outputs.version }}"
-      
-      - name: Install dependencies in Alpine
-        if: matrix.container == 'node:20-alpine'
-        run: |
-          apk add --no-cache bash git python3 make g++
       
       - if: matrix.npm_script == 'pack:windows'
         name: install nodejs for windows
