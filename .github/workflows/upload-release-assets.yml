@@ -56,7 +56,7 @@ jobs:
       - name: Install base tools for alpine container
         if: matrix.container == 'node:20-alpine'
         run: |
-          apk add --no-cache bash git python3 make g++ perl-utils
+          apk add --no-cache bash git python3 make g++ perl-utils xz
 
       - name: Checkout repository
         uses: actions/checkout@v4
