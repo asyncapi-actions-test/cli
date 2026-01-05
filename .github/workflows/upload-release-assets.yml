@@ -4,6 +4,9 @@ on:
   release:
     types:
       - published
+  push:
+    branches:
+      - master
 
 env:
   CI: true
@@ -52,6 +55,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Install bash in Alpine
+        if: matrix.container == 'node:20-alpine'
+        run: apk add --no-cache bash
       
       - name: Check package-lock version
         uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master
