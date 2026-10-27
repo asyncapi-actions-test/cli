@@ -1,5 +1,11 @@
 # @asyncapi/optimizer
 
+## 90.0.1
+
+### Patch Changes
+
+- 1782a92: Test the complete CLI workspace release in the sandbox.
+
 ## 2.0.0
 
 ### Major Changes

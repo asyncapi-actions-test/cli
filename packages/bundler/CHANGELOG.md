@@ -1,5 +1,11 @@
 # @asyncapi/bundler
 
+## 90.0.1
+
+### Patch Changes
+
+- 1782a92: Test the complete CLI workspace release in the sandbox.
+
 ## 1.1.0
 
 ### Minor Changes

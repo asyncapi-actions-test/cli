@@ -1,5 +1,15 @@
 # @asyncapi/cli
 
+## 90.0.1
+
+### Patch Changes
+
+- 1782a92: Test the complete CLI workspace release in the sandbox.
+- Updated dependencies [1782a92]
+  - @action-test-ash17290/asyncapi-diff-release-test-20261022@90.0.1
+  - @action-test-ash17290/asyncapi-optimizer-release-test-20261022@90.0.1
+  - @action-test-ash17290/asyncapi-bundler-release-test-20261022@90.0.1
+
 ## 6.2.2
 
 ### Patch Changes

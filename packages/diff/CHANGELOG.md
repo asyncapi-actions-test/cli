@@ -1,5 +1,11 @@
 # @asyncapi/diff
 
+## 90.0.1
+
+### Patch Changes
+
+- 1782a92: Test the complete CLI workspace release in the sandbox.
+
 ## 0.6.0
 
 ### Minor Changes
