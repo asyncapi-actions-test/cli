@@ -1,4 +1,4 @@
-const bundle = require('@asyncapi/bundler')
+const bundle = require('@action-test-ash17290/asyncapi-bundler-release-test-20261022')
 const {readFileSync, writeFileSync} = require('node:fs')
 
 async function main() {

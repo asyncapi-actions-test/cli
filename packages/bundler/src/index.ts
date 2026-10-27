@@ -37,7 +37,7 @@ const originDir = String(process.cwd());
  ***TypeScript**
  *```ts
  *import { writeFileSync } from 'fs';
- *import bundle from '@asyncapi/bundler';
+ *import bundle from '@action-test-ash17290/asyncapi-bundler-release-test-20261022';
  *
  *async function main() {
  *  const document = await bundle(['social-media/comments-service/main.yaml'], {
@@ -57,7 +57,7 @@ const originDir = String(process.cwd());
  *'use strict';
  *
  *const { writeFileSync } = require('fs');
- *const bundle = require('@asyncapi/bundler');
+ *const bundle = require('@action-test-ash17290/asyncapi-bundler-release-test-20261022');
  *
  *async function main() {
  *  const document = await bundle(['social-media/comments-service/main.yaml'], {
@@ -75,7 +75,7 @@ const originDir = String(process.cwd());
  *'use strict';
  *
  *import { writeFileSync } from 'fs';
- *import bundle from '@asyncapi/bundler';
+ *import bundle from '@action-test-ash17290/asyncapi-bundler-release-test-20261022';
  *
  *async function main() {
  *  const document = await bundle(['social-media/comments-service/main.yaml'], {

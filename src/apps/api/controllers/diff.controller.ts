@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response, Router } from 'express';
-import { diff } from '@asyncapi/diff';
+import { diff } from '@action-test-ash17290/asyncapi-diff-release-test-20261022';
 
 import { validationMiddleware } from '../middlewares/validation.middleware';
 

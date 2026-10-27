@@ -70,20 +70,20 @@ test('all packages publish before GitHub release creation; libraries never becom
   const release = packed(t);
   publish(release.root, release.directory, release.client);
   assert.deepEqual(release.events, [
-    'npm:@asyncapi/diff',
-    'npm:@asyncapi/optimizer',
-    'npm:@asyncapi/bundler',
-    'npm:@asyncapi/cli',
+    'npm:@action-test-ash17290/asyncapi-diff-release-test-20261022',
+    'npm:@action-test-ash17290/asyncapi-optimizer-release-test-20261022',
+    'npm:@action-test-ash17290/asyncapi-bundler-release-test-20261022',
+    'npm:@action-test-ash17290/asyncapi-cli-release-test-20261022',
   ]);
   githubMode(release);
   releases(release.root, release.directory, release.client);
   assert.deepEqual(release.events.slice(4), [
-    'tag:@asyncapi/diff@0.6.0',
-    'release:@asyncapi/diff@0.6.0:false',
-    'tag:@asyncapi/optimizer@2.0.0',
-    'release:@asyncapi/optimizer@2.0.0:false',
-    'tag:@asyncapi/bundler@1.1.0',
-    'release:@asyncapi/bundler@1.1.0:false',
+    'tag:@action-test-ash17290/asyncapi-diff-release-test-20261022@0.6.0',
+    'release:@action-test-ash17290/asyncapi-diff-release-test-20261022@0.6.0:false',
+    'tag:@action-test-ash17290/asyncapi-optimizer-release-test-20261022@2.0.0',
+    'release:@action-test-ash17290/asyncapi-optimizer-release-test-20261022@2.0.0:false',
+    'tag:@action-test-ash17290/asyncapi-bundler-release-test-20261022@1.1.0',
+    'release:@action-test-ash17290/asyncapi-bundler-release-test-20261022@1.1.0:false',
     'tag:v6.2.1',
     'release:v6.2.1:true',
   ]);
@@ -119,7 +119,7 @@ test('partial npm publication retries only missing packages and no release can p
   };
   publish(release.root, release.directory, release.client);
   assert.equal(
-    release.events.filter((event) => event === 'npm:@asyncapi/diff').length,
+    release.events.filter((event) => event === 'npm:@action-test-ash17290/asyncapi-diff-release-test-20261022').length,
     1,
   );
 });
@@ -271,7 +271,7 @@ test('npm publication retains public provenance context and only its OIDC creden
     GITHUB_REPOSITORY_ID: '123',
     GITHUB_REPOSITORY_OWNER_ID: '456',
     GITHUB_WORKFLOW_REF:
-      'asyncapi/cli/.github/workflows/release-with-changesets.yml@refs/heads/master',
+      'asyncapi-actions-test/cli/.github/workflows/release-with-changesets.yml@refs/heads/master',
     GITHUB_RUN_ID: '789',
     GITHUB_RUN_ATTEMPT: '1',
     RUNNER_ENVIRONMENT: 'github-hosted',

@@ -1,29 +1,29 @@
 {
-  "name": "@asyncapi/cli",
+  "name": "@action-test-ash17290/asyncapi-cli-release-test-20261022",
   "description": "All in one CLI for all AsyncAPI tools",
-  "version": "6.2.2",
+  "version": "90.0.0",
   "author": "@asyncapi",
   "bin": {
     "asyncapi": "./bin/run_bin"
   },
   "repository": {
-    "url": "git+https://github.com/asyncapi/cli.git",
+    "url": "git+https://github.com/asyncapi-actions-test/cli.git",
     "type": "git"
   },
-  "bugs": "https://github.com/asyncapi/cli/issues",
+  "bugs": "https://github.com/asyncapi-actions-test/cli/issues",
   "workspaces": [
     ".",
     "packages/*"
   ],
   "dependencies": {
     "@asyncapi/avro-schema-parser": "^3.1.0",
-    "@asyncapi/bundler": "^1.1.0",
+    "@action-test-ash17290/asyncapi-bundler-release-test-20261022": "^90.0.0",
     "@asyncapi/converter": "^2.0.1",
-    "@asyncapi/diff": "^0.6.0",
+    "@action-test-ash17290/asyncapi-diff-release-test-20261022": "^90.0.0",
     "@asyncapi/generator": "^3.2.0",
     "@asyncapi/modelina-cli": "^5.10.1",
     "@asyncapi/openapi-schema-parser": "^3.1.0",
-    "@asyncapi/optimizer": "^2.0.0",
+    "@action-test-ash17290/asyncapi-optimizer-release-test-20261022": "^90.0.0",
     "@asyncapi/parser": "^3.6.2",
     "@asyncapi/problem": "^1.0.0",
     "@asyncapi/protobuf-schema-parser": "^3.8.3",
@@ -120,7 +120,7 @@
     "/openapi.yaml",
     "/oclif.manifest.json"
   ],
-  "homepage": "https://github.com/asyncapi/cli",
+  "homepage": "https://github.com/asyncapi-actions-test/cli",
   "keywords": [
     "oclif"
   ],
@@ -156,7 +156,7 @@
     ],
     "warn-if-update-available": {
       "frequency": 24,
-      "message": "\n<%= chalk.yellow('╭────────────────────────────────────────────────────────────────╮') %>\n<%= chalk.yellow('│                                                                │') %>\n<%= chalk.yellow('│') %>               Update available! <%= chalk.red(config.version) %> → <%= chalk.greenBright(latest) %>.                 <%= chalk.yellow('│') %>\n<%= chalk.yellow('│') %> <%= chalk.magentaBright('Changelog:') %> https://github.com/asyncapi/cli/releases/tag/v<%= latest %> <%= chalk.yellow('│') %>\n<%= chalk.yellow('│') %>      Run \"<%= chalk.magentaBright('npm install -g @asyncapi/cli@latest') %>\" to update.      <%= chalk.yellow('│') %>\n<%= chalk.yellow('│') %>                                                                <%= chalk.yellow('│') %>\n<%= chalk.yellow('╰────────────────────────────────────────────────────────────────╯') %>",
+      "message": "\n<%= chalk.yellow('╭────────────────────────────────────────────────────────────────╮') %>\n<%= chalk.yellow('│                                                                │') %>\n<%= chalk.yellow('│') %>               Update available! <%= chalk.red(config.version) %> → <%= chalk.greenBright(latest) %>.                 <%= chalk.yellow('│') %>\n<%= chalk.yellow('│') %> <%= chalk.magentaBright('Changelog:') %> https://github.com/asyncapi-actions-test/cli/releases/tag/v<%= latest %> <%= chalk.yellow('│') %>\n<%= chalk.yellow('│') %>      Run \"<%= chalk.magentaBright('npm install -g @action-test-ash17290/asyncapi-cli-release-test-20261022@latest') %>\" to update.      <%= chalk.yellow('│') %>\n<%= chalk.yellow('│') %>                                                                <%= chalk.yellow('│') %>\n<%= chalk.yellow('╰────────────────────────────────────────────────────────────────╯') %>",
       "frequencyUnit": "hours"
     }
   },
@@ -168,16 +168,16 @@
   },
   "scripts": {
     "build": "npm run optimizer:build && npm run diff:build && npm run bundler:build && rimraf lib && node scripts/fetch-asyncapi-example.js && npm run generate:languages && tsc && tsc-alias --project tsconfig.json && oclif manifest && echo \"Build Completed\"",
-    "optimizer:build": "turbo run build --filter=@asyncapi/optimizer",
-    "optimizer:test": "turbo run test --filter=@asyncapi/optimizer",
-    "diff:build": "turbo run build --filter=@asyncapi/diff",
-    "diff:test": "turbo run test --filter=@asyncapi/diff",
-    "bundler:build": "turbo run build --filter=@asyncapi/bundler",
-    "bundler:test": "turbo run test --filter=@asyncapi/bundler",
+    "optimizer:build": "turbo run build --filter=@action-test-ash17290/asyncapi-optimizer-release-test-20261022",
+    "optimizer:test": "turbo run test --filter=@action-test-ash17290/asyncapi-optimizer-release-test-20261022",
+    "diff:build": "turbo run build --filter=@action-test-ash17290/asyncapi-diff-release-test-20261022",
+    "diff:test": "turbo run test --filter=@action-test-ash17290/asyncapi-diff-release-test-20261022",
+    "bundler:build": "turbo run build --filter=@action-test-ash17290/asyncapi-bundler-release-test-20261022",
+    "bundler:test": "turbo run test --filter=@action-test-ash17290/asyncapi-bundler-release-test-20261022",
     "bump:github-action": "node github-action/lib/bump-action-version.js",
     "bump:version": "changeset version && node github-action/lib/bump-action-version.js --refresh-lock",
     "dev": "tsc --watch",
-    "docker:build": "docker build -t asyncapi/cli:latest .",
+    "docker:build": "docker build -t ghcr.io/asyncapi-actions-test/cli-release-test-20261022-cli:latest .",
     "generate:readme:create": "node -e \"const fs = require('fs'); fs.writeFileSync('scripts/README.md', '# Usage\\n\\n<!-- usage -->\\n\\n# Commands\\n\\n<!-- commands -->\\n');\"",
     "generate:readme:commands": "npm run build && cd scripts && cross-env DEBUG=* oclif readme",
     "generate:assets": "npm run generate:readme:toc && npm run generate:commands",
@@ -205,12 +205,12 @@
     "get-version": "echo $npm_package_version",
     "createhook": "oclif generate hook myhook --event=command_not_found",
     "createhookinit": "oclif generate hook inithook --event=init",
-    "action:docker:build": "docker build -f github-action/Dockerfile -t asyncapi/github-action-for-cli:latest .",
+    "action:docker:build": "docker build -f github-action/Dockerfile -t ghcr.io/asyncapi-actions-test/cli-release-test-20261022-action:latest .",
     "action:test": "npm run build && cd github-action && make test",
     "api:dev": "cross-env NODE_ENV=development PORT=3000 nodemon",
     "api:prod": "npm run api:build && cross-env NODE_ENV=production PORT=80 node lib/apps/api/server.js",
-    "api:docker": "docker run -it -p 80:80 asyncapi/server-api",
-    "api:build:docker": "docker build -t asyncapi/server-api -f ./src/apps/api/Dockerfile .",
+    "api:docker": "docker run -it -p 80:80 ghcr.io/asyncapi-actions-test/cli-release-test-20261022-api",
+    "api:build:docker": "docker build -t ghcr.io/asyncapi-actions-test/cli-release-test-20261022-api -f ./src/apps/api/Dockerfile .",
     "api:build": "rimraf lib && npm run generate:languages && tsc && tsc-alias --project tsconfig.json",
     "api:test": "",
     "test:release": "node --test test/release/*.test.js"

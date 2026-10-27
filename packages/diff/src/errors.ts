@@ -1,5 +1,5 @@
 /**
- * Stable codes for errors thrown by `@asyncapi/diff`.
+ * Stable codes for errors thrown by `@action-test-ash17290/asyncapi-diff-release-test-20261022`.
  * The library does not call `process.exit`. Callers map these onto their own exit codes.
  */
 export enum DiffErrorCode {

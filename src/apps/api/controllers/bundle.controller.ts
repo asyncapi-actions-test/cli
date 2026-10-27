@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response, Router } from 'express';
-import bundler from '@asyncapi/bundler';
+import bundler from '@action-test-ash17290/asyncapi-bundler-release-test-20261022';
 
 import { validationMiddleware } from '../middlewares/validation.middleware';
 

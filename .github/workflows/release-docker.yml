@@ -1,14 +1,17 @@
+# Sandbox: enable delivery only after the npm release checks pass.
 name: Release Docker Image
-on:
+'on':
   release:
     types:
       - published
-
 permissions:
   contents: read
 jobs:
   publish-docker:
-    if: github.repository == 'asyncapi/cli' && !github.event.release.draft && !github.event.release.prerelease && startsWith(github.event.release.tag_name, 'v') && !contains(github.event.release.tag_name, '-')
+    if: >-
+      false && (github.repository == 'asyncapi-actions-test/cli' && !github.event.release.draft &&
+      !github.event.release.prerelease && startsWith(github.event.release.tag_name, 'v') &&
+      !contains(github.event.release.tag_name, '-'))
     name: Generating Docker
     runs-on: ubuntu-latest
     steps:
@@ -20,63 +23,50 @@ jobs:
           [[ "$TAG_NAME" =~ ^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]] || exit 1
           VERSION_WITHOUT_V=${TAG_NAME#v}
           echo "value=${VERSION_WITHOUT_V}" >> "$GITHUB_OUTPUT"
-
-      - name : Checkout repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           ref: ${{ github.event.release.tag_name }}
           persist-credentials: false
-
       - name: Set Up QEMU
-        uses: docker/setup-qemu-action@68827325e0b33c7199eb31dd4e31fbe9023e06e3 # v3.0.0
-
+        uses: docker/setup-qemu-action@68827325e0b33c7199eb31dd4e31fbe9023e06e3
       - name: Set Up Docker Buildx
-        uses: docker/setup-buildx-action@d70bba72b1f3fd22344832f00baa16ece964efeb # v3.3.0
-
-      - name: login to Docker Hub
-        uses: docker/login-action@e92390c5fb421da1463c202d546fed0ec5c39f20 # v3.1.0
+        uses: docker/setup-buildx-action@d70bba72b1f3fd22344832f00baa16ece964efeb
+      - name: Login to test GHCR
+        uses: docker/login-action@e92390c5fb421da1463c202d546fed0ec5c39f20
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build Image
-        uses: docker/build-push-action@2cdde995de11925a030ce8070c3d77a52ffcf1c0 # v5.3.0
+        uses: docker/build-push-action@2cdde995de11925a030ce8070c3d77a52ffcf1c0
         with:
           push: true
           load: false
           build-args: |
             ASYNCAPI_CLI_VERSION=${{ steps.version.outputs.value }}
           tags: |
-            asyncapi/cli:${{ steps.version.outputs.value }}
-            asyncapi/cli:latest
+            ghcr.io/asyncapi-actions-test/cli-release-test-20261022-cli:${{ steps.version.outputs.value }}
+            ghcr.io/asyncapi-actions-test/cli-release-test-20261022-cli:latest
           platforms: linux/amd64,linux/arm64
           cache-from: type=gha
           cache-to: type=gha
-
-      - name:  Sync README.md and Description to Docker Hub
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          ref: ${{ github.event.release.tag_name }}
-          persist-credentials: false
-
-      - uses: meeDamian/sync-readme@82715041300710d9be7c726c9d6c683b70451087 # v1.0.6
-        with:
-          user: ${{ secrets.DOCKER_USERNAME }}
-          pass: ${{ secrets.DOCKER_PASSWORD }}
-          slug: asyncapi/cli
-          description: CLI to work with your AsyncAPI files
-
+    permissions:
+      contents: read
+      packages: write
   publish-action-docker:
-    if: github.repository == 'asyncapi/cli' && !github.event.release.draft && !github.event.release.prerelease && startsWith(github.event.release.tag_name, 'v') && !contains(github.event.release.tag_name, '-')
+    if: >-
+      false && (github.repository == 'asyncapi-actions-test/cli' && !github.event.release.draft &&
+      !github.event.release.prerelease && startsWith(github.event.release.tag_name, 'v') &&
+      !contains(github.event.release.tag_name, '-'))
     name: Release github action for cli and update version in action.yml
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           ref: ${{ github.event.release.tag_name }}
           persist-credentials: false
-
       - name: Get version without v character
         id: version
         env:
@@ -85,39 +75,26 @@ jobs:
           [[ "$TAG_NAME" =~ ^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]] || exit 1
           VERSION_WITHOUT_V=${TAG_NAME#v}
           echo "value=${VERSION_WITHOUT_V}" >> "$GITHUB_OUTPUT"
-
       - name: Set Up QEMU
-        uses: docker/setup-qemu-action@68827325e0b33c7199eb31dd4e31fbe9023e06e3 # v3.0.0
-
+        uses: docker/setup-qemu-action@68827325e0b33c7199eb31dd4e31fbe9023e06e3
       - name: Set Up Docker Buildx
-        uses: docker/setup-buildx-action@d70bba72b1f3fd22344832f00baa16ece964efeb # v3.3.0
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@e92390c5fb421da1463c202d546fed0ec5c39f20 # v3.1.0
+        uses: docker/setup-buildx-action@d70bba72b1f3fd22344832f00baa16ece964efeb
+      - name: Login to test GHCR
+        uses: docker/login-action@e92390c5fb421da1463c202d546fed0ec5c39f20
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push
-        uses: docker/build-push-action@2cdde995de11925a030ce8070c3d77a52ffcf1c0 # v5.3.0
+        uses: docker/build-push-action@2cdde995de11925a030ce8070c3d77a52ffcf1c0
         with:
           context: .
           file: ./github-action/Dockerfile
           push: true
           tags: |
-            asyncapi/github-action-for-cli:${{ steps.version.outputs.value }}
-            asyncapi/github-action-for-cli:latest
+            ghcr.io/asyncapi-actions-test/cli-release-test-20261022-action:${{ steps.version.outputs.value }}
+            ghcr.io/asyncapi-actions-test/cli-release-test-20261022-action:latest
           platforms: linux/amd64,linux/arm64
-
-      - name: Change directory to github-action
-        run: |
-          cd github-action/
-          ls -la
-
-      - uses: meeDamian/sync-readme@82715041300710d9be7c726c9d6c683b70451087 # v1.0.6
-        with:
-          user: ${{ secrets.DOCKER_USERNAME }}
-          pass: ${{ secrets.DOCKER_PASSWORD }}
-          slug: asyncapi/github-action-for-cli
-          description: Github action for AsyncAPI CLI
-
+    permissions:
+      contents: read
+      packages: write

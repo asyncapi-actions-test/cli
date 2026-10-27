@@ -12,7 +12,7 @@ env:
   CI: true
 jobs:
   test:
-    if: github.repository == 'asyncapi/cli' && github.ref == 'refs/heads/master'
+    if: github.repository == 'asyncapi-actions-test/cli' && github.ref == 'refs/heads/master'
     strategy:
       fail-fast: false
       matrix:

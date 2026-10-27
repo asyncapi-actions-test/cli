@@ -4,7 +4,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 
-const IMAGE = 'docker://asyncapi/github-action-for-cli:';
+const IMAGE = 'docker://ghcr.io/asyncapi-actions-test/cli-release-test-20261022-action:';
 const PLACEHOLDER = '${ version }';
 const INPUTS = ['cli_version', 'command', 'filepath', 'template', 'language', 'output', 'parameters', 'custom_command'];
 const ROOT = path.resolve(__dirname, '../..');

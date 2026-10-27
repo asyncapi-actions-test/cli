@@ -45,18 +45,18 @@ elif [[ -n "$CLI_VERSION" && ! "$CLI_VERSION" == "latest" ]]; then
   else
     output=$(asyncapi --version >/dev/null 2>&1)
   fi
-  # output @asyncapi/cli/1.1.1 linux-x64 node-v20.8.1
+  # output @action-test-ash17290/asyncapi-cli-release-test-20261022/1.1.1 linux-x64 node-v20.8.1
   version=$(echo "$output" | cut -d' ' -f1 | cut -d '/' -f3)
   if [[ "$version" == "$CLI_VERSION" ]]; then
     echo -e "${BLUE}AsyncAPI CLI already installed:${NC}" "$CLI_VERSION" "...skipping"
   else 
     echo -e "${BLUE}Installing AsyncAPI CLI:${NC}" "$CLI_VERSION"
-    npm install -g @asyncapi/cli@$CLI_VERSION
+    npm install -g @action-test-ash17290/asyncapi-cli-release-test-20261022@$CLI_VERSION
   fi
 else
   if [[ -z $(command -v -- asyncapi) ]]; then
     echo -e "${RED}No CLI installation found. Installing the latest one"
-    npm install -g @asyncapi/cli
+    npm install -g @action-test-ash17290/asyncapi-cli-release-test-20261022
   fi
   echo -e "${BLUE}CLI version:${NC}" "latest"
 fi

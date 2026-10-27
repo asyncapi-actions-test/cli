@@ -217,7 +217,7 @@ paths:
         - bundler
       externalDocs:
         name: Github Repository for the AsyncAPI Bundler
-        url: https://github.com/asyncapi/cli/tree/master/packages/bundler
+        url: https://github.com/asyncapi-actions-test/cli/tree/master/packages/bundler
       requestBody:
         description: Bundle the given AsyncAPI document(s) to single one.
         required: true
@@ -303,7 +303,7 @@ paths:
         - differ
       externalDocs:
         name: Github Repository for the AsyncAPI Diff
-        url: https://github.com/asyncapi/cli/tree/master/packages/diff
+        url: https://github.com/asyncapi-actions-test/cli/tree/master/packages/diff
       requestBody:
         description: Compare the given AsyncAPI documents.
         required: true
@@ -609,7 +609,7 @@ components:
         name:
           type: string
           description: The name of the application
-          example: "@asyncapi/cli"
+          example: "@action-test-ash17290/asyncapi-cli-release-test-20261022"
         description:
           type: string
           description: Description of the application
@@ -659,12 +659,12 @@ components:
               type: string
               format: uri
               description: Repository URL
-              example: "https://github.com/asyncapi/cli"
+              example: "https://github.com/asyncapi-actions-test/cli"
             bugs:
               type: string
               format: uri
               description: Bug tracker URL
-              example: "https://github.com/asyncapi/cli/issues"
+              example: "https://github.com/asyncapi-actions-test/cli/issues"
             license:
               type: string
               description: License type

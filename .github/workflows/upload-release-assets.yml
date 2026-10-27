@@ -1,18 +1,19 @@
+# Sandbox: enable delivery only after the npm release checks pass.
 name: Upload custom assets to GitHub release
-
-on:
+'on':
   release:
     types:
       - published
-
 env:
   CI: true
-
 permissions:
   contents: read
 jobs:
   upload-assets:
-    if: github.repository == 'asyncapi/cli' && !github.event.release.draft && !github.event.release.prerelease && startsWith(github.event.release.tag_name, 'v') && !contains(github.event.release.tag_name, '-')
+    if: >-
+      false && (github.repository == 'asyncapi-actions-test/cli' && !github.event.release.draft &&
+      !github.event.release.prerelease && startsWith(github.event.release.tag_name, 'v') &&
+      !contains(github.event.release.tag_name, '-'))
     name: Generate and upload assets
     runs-on: ${{ matrix.os }}
     strategy:
@@ -30,7 +31,7 @@ jobs:
             npm_script: pack:tarballs:alpine
             dist_folder: tar
             extension: alpine.tar.gz
-            container: 'node:24-alpine'
+            container: node:24-alpine
             alpine: true
           - os: ubuntu-latest
             npm_script: pack:windows
@@ -48,63 +49,56 @@ jobs:
             npm_script: pack:macos
             dist_folder: macos
             extension: x64.pkg
-    
     container: ${{ matrix.container }}
-    
     steps:
       - name: Install base tools for alpine container
         if: matrix.alpine == true
         run: |
           apk add --no-cache bash git python3 make g++ perl-utils xz gcompat libstdc++
-
       - name: Checkout repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           ref: ${{ github.event.release.tag_name }}
           persist-credentials: false
-
-      # Needed to avoid "fatal: detected dubious ownership in repository" error when using alpine container
       - name: Mark GitHub workspace as safe
         if: matrix.alpine == true
         run: |
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
-
       - name: Check package-lock version
         if: matrix.container == ''
         uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master
         id: lockversion
         with:
           node-version: ${{ vars.NODE_VERSION }}
-
       - name: Setup Node.js
         if: matrix.container == ''
-        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
         with:
           node-version: ${{ steps.lockversion.outputs.version }}
           package-manager-cache: false
-
       - name: Get version from package.json
-        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3
         id: extractver
         env:
           RELEASE_TAG: ${{ github.event.release.tag_name }}
         with:
-          script: |
+          script: >
             const packageJson = require('./package.json');
+
             const packageJsonVersion = packageJson.version;
-            if (`v${packageJsonVersion}` !== process.env.RELEASE_TAG || !/^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/.test(process.env.RELEASE_TAG)) {
+
+            if (`v${packageJsonVersion}` !== process.env.RELEASE_TAG ||
+            !/^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/.test(process.env.RELEASE_TAG)) {
               throw new Error('Installer source does not match a stable CLI release tag');
             }
+
             core.setOutput('version', packageJsonVersion);
       - if: matrix.npm_script == 'pack:windows'
-        #fix for windows build issue #1433
         name: Install p7zip-full nsis
         run: sudo apt-get install -y p7zip-full nsis
-
       - name: Install npm for Windows installer builds
         if: matrix.npm_script == 'pack:windows'
         run: npm install --global npm@11.19.1 --ignore-scripts --no-audit --no-fund
-
       - name: Install dependencies
         run: npm ci
       - name: Build project
@@ -119,20 +113,10 @@ jobs:
           else
             npm run pack:rename
           fi
-      
       - name: Update release
-        uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3.0.3
+        uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64
         with:
           fail_on_unmatched_files: true
           files: dist/${{ matrix.dist_folder }}/asyncapi.${{ matrix.extension }}
           tag_name: v${{ steps.extractver.outputs.version }}
           token: ${{ secrets.GH_TOKEN }}
-      - if: failure() # Only, on failure, send a message on the 94_bot-failing-ci slack channel
-        name: Report workflow run status to Slack
-        uses: 8398a7/action-slack@fbd6aa58ba854a740e11a35d0df80cb5d12101d8 #using https://github.com/8398a7/action-slack/releases/tag/v3.15.1
-        with:
-          status: ${{ job.status }}
-          fields: repo,action,workflow
-          text: 'AsyncAPI CLI release build artifacts failed'
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CI_FAIL_NOTIFY }}

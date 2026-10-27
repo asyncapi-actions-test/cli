@@ -31,8 +31,8 @@ test('action bump changes only its image version and rejects downgrade or invali
   assert.equal(
     fs.readFileSync(path.join(repo.root, 'action.yml'), 'utf8'),
     before.replace(
-      'github-action-for-cli:6.2.1',
-      'github-action-for-cli:6.2.2',
+      'cli-release-test-20261022-action:6.2.1',
+      'cli-release-test-20261022-action:6.2.2',
     ),
   );
 
@@ -53,47 +53,47 @@ test('action bump changes only its image version and rejects downgrade or invali
 const cases = [
   [
     'CLI patch',
-    { '@asyncapi/cli': 'patch' },
+    { '@action-test-ash17290/asyncapi-cli-release-test-20261022': 'patch' },
     ['6.2.2', '0.6.0', '2.0.0', '1.1.0'],
   ],
   [
     'diff patch',
-    { '@asyncapi/diff': 'patch' },
+    { '@action-test-ash17290/asyncapi-diff-release-test-20261022': 'patch' },
     ['6.2.1', '0.6.1', '2.0.0', '1.1.0'],
   ],
   [
     'optimizer minor',
-    { '@asyncapi/optimizer': 'minor' },
+    { '@action-test-ash17290/asyncapi-optimizer-release-test-20261022': 'minor' },
     ['6.2.1', '0.6.0', '2.1.0', '1.1.0'],
   ],
   [
     'bundler minor',
-    { '@asyncapi/bundler': 'minor' },
+    { '@action-test-ash17290/asyncapi-bundler-release-test-20261022': 'minor' },
     ['6.2.1', '0.6.0', '2.0.0', '1.2.0'],
   ],
   [
     'all packages',
     {
-      '@asyncapi/cli': 'patch',
-      '@asyncapi/diff': 'patch',
-      '@asyncapi/optimizer': 'patch',
-      '@asyncapi/bundler': 'patch',
+      '@action-test-ash17290/asyncapi-cli-release-test-20261022': 'patch',
+      '@action-test-ash17290/asyncapi-diff-release-test-20261022': 'patch',
+      '@action-test-ash17290/asyncapi-optimizer-release-test-20261022': 'patch',
+      '@action-test-ash17290/asyncapi-bundler-release-test-20261022': 'patch',
     },
     ['6.2.2', '0.6.1', '2.0.1', '1.1.1'],
   ],
   [
     'diff major',
-    { '@asyncapi/diff': 'major' },
+    { '@action-test-ash17290/asyncapi-diff-release-test-20261022': 'major' },
     ['6.2.2', '1.0.0', '2.0.0', '1.1.0'],
   ],
   [
     'optimizer major',
-    { '@asyncapi/optimizer': 'major' },
+    { '@action-test-ash17290/asyncapi-optimizer-release-test-20261022': 'major' },
     ['6.2.2', '0.6.0', '3.0.0', '1.1.0'],
   ],
   [
     'bundler major',
-    { '@asyncapi/bundler': 'major' },
+    { '@action-test-ash17290/asyncapi-bundler-release-test-20261022': 'major' },
     ['6.2.2', '0.6.0', '2.0.0', '2.0.0'],
   ],
 ];
@@ -149,13 +149,13 @@ for (const [name, change, expected] of cases) {
       assert.deepEqual(lock.packages[''].dependencies, cli.dependencies);
       const semver = require('semver');
       assert.ok(
-        semver.satisfies(expected[1], cli.dependencies['@asyncapi/diff']),
+        semver.satisfies(expected[1], cli.dependencies['@action-test-ash17290/asyncapi-diff-release-test-20261022']),
       );
       assert.ok(
-        semver.satisfies(expected[2], cli.dependencies['@asyncapi/optimizer']),
+        semver.satisfies(expected[2], cli.dependencies['@action-test-ash17290/asyncapi-optimizer-release-test-20261022']),
       );
       assert.ok(
-        semver.satisfies(expected[3], cli.dependencies['@asyncapi/bundler']),
+        semver.satisfies(expected[3], cli.dependencies['@action-test-ash17290/asyncapi-bundler-release-test-20261022']),
       );
       assert.equal(
         fs.existsSync(path.join(repo.root, '.changeset/testing.md')),

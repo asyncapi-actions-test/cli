@@ -1,5 +1,5 @@
 /**
- * Default wait before registry reachability check fails (https://github.com/asyncapi/cli/issues/2027).
+ * Default wait before registry reachability check fails (https://github.com/asyncapi-actions-test/cli/issues/2027).
  * 15s balances fail-fast vs slow VPNs/proxies; override with ASYNCAPI_REGISTRY_CHECK_TIMEOUT_MS.
  */
 const REGISTRY_REACHABILITY_TIMEOUT_MS = 15_000;

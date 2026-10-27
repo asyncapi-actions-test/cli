@@ -10,6 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@asyncapi/bundler": "../../"
+    "@action-test-ash17290/asyncapi-bundler-release-test-20261022": "../../"
   }
 }

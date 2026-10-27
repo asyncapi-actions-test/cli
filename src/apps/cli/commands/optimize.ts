@@ -1,5 +1,5 @@
 import { Args } from '@oclif/core';
-import { Optimizer, Output, Report, ReportElement, OptimizerParseError } from '@asyncapi/optimizer';
+import { Optimizer, Output, Report, ReportElement, OptimizerParseError } from '@action-test-ash17290/asyncapi-optimizer-release-test-20261022';
 import Command from '@cli/internal/base';
 import { ValidationError } from '@errors/validation-error';
 import { load, retrieveFileFormat } from '@models/SpecificationFile';

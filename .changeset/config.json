@@ -1,6 +1,6 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@2.3.0/schema.json",
-  "changelog": ["@changesets/changelog-git", { "repo": "asyncapi/cli" }],
+  "changelog": ["@changesets/changelog-git", { "repo": "asyncapi-actions-test/cli" }],
   "commit": false,
   "fixed": [],
   "linked": [],

@@ -3,7 +3,7 @@
  */
 
 import { writeFileSync } from 'node:fs';
-import bundle from '@asyncapi/bundler';
+import bundle from '@action-test-ash17290/asyncapi-bundler-release-test-20261022';
 
 const files = [
   'send/lightTurnOn/asyncapi.yaml',

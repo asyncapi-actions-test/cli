@@ -14,7 +14,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@asyncapi/bundler": "../",
+    "@action-test-ash17290/asyncapi-bundler-release-test-20261022": "../",
     "@types/node": "^20.11.30",
     "ts-node": "^10.9.1",
     "typescript": "^5.4.3"

@@ -1,5 +1,5 @@
 import Command from '@cli/internal/base';
-import bundle, { Document } from '@asyncapi/bundler';
+import bundle, { Document } from '@action-test-ash17290/asyncapi-bundler-release-test-20261022';
 import { promises } from 'fs';
 import path from 'path';
 import { Specification } from '@models/SpecificationFile';

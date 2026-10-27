@@ -56,7 +56,7 @@ COPY --from=build /app/lib ./lib
 # Copy package files
 COPY --from=build /app/package*.json ./
 
-# Copy workspace packages (built @asyncapi/optimizer and @asyncapi/diff) so "*" workspace dependencies resolve
+# Copy workspace packages (built @action-test-ash17290/asyncapi-optimizer-release-test-20261022 and @action-test-ash17290/asyncapi-diff-release-test-20261022) so "*" workspace dependencies resolve
 COPY --from=build /app/packages ./packages
 
 # package.json "postinstall" points at scripts/enableAutoComplete.js — copy it so npm cannot fail looking for it

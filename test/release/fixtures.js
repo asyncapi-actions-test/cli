@@ -18,13 +18,13 @@ function fixture(t, changeset) {
     [
       'package.json',
       {
-        name: '@asyncapi/cli',
+        name: '@action-test-ash17290/asyncapi-cli-release-test-20261022',
         version: '6.2.1',
         workspaces: ['.', 'packages/*'],
         dependencies: {
-          '@asyncapi/diff': '^0.6.0',
-          '@asyncapi/optimizer': '^2.0.0',
-          '@asyncapi/bundler': '^1.1.0',
+          '@action-test-ash17290/asyncapi-diff-release-test-20261022': '^0.6.0',
+          '@action-test-ash17290/asyncapi-optimizer-release-test-20261022': '^2.0.0',
+          '@action-test-ash17290/asyncapi-bundler-release-test-20261022': '^1.1.0',
         },
         devDependencies: {
           '@changesets/cli': '2.29.8',
@@ -34,15 +34,15 @@ function fixture(t, changeset) {
     ],
     [
       'packages/diff/package.json',
-      { name: '@asyncapi/diff', version: '0.6.0' },
+      { name: '@action-test-ash17290/asyncapi-diff-release-test-20261022', version: '0.6.0' },
     ],
     [
       'packages/optimizer/package.json',
-      { name: '@asyncapi/optimizer', version: '2.0.0' },
+      { name: '@action-test-ash17290/asyncapi-optimizer-release-test-20261022', version: '2.0.0' },
     ],
     [
       'packages/bundler/package.json',
-      { name: '@asyncapi/bundler', version: '1.1.0' },
+      { name: '@action-test-ash17290/asyncapi-bundler-release-test-20261022', version: '1.1.0' },
     ],
   ];
 
@@ -114,7 +114,7 @@ function fixture(t, changeset) {
   const workflowEnv = {
     ...env,
     GITHUB_ACTIONS: 'true',
-    GITHUB_REPOSITORY: 'asyncapi/cli',
+    GITHUB_REPOSITORY: 'asyncapi-actions-test/cli',
     GITHUB_REF: 'refs/heads/master',
     GITHUB_EVENT_NAME: 'push',
     GITHUB_SHA: sha,

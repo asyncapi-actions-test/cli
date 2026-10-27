@@ -6,7 +6,7 @@
 'use strict';
 
 const { writeFileSync } = require('node:fs');
-const bundle = require('@asyncapi/bundler');
+const bundle = require('@action-test-ash17290/asyncapi-bundler-release-test-20261022');
 
 async function main() {
   const document = await bundle(['./social-media/comments-service/main.yaml', '../main.yaml'], {

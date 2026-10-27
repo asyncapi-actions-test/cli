@@ -1,6 +1,6 @@
 import { SpecificationFileNotFound } from '@errors/specification-file';
 import { readFileSync } from 'fs';
-import bundle from '@asyncapi/bundler';
+import bundle from '@action-test-ash17290/asyncapi-bundler-release-test-20261022';
 import { createServer } from 'http';
 import { WebSocketServer } from 'ws';
 import chokidar from 'chokidar';

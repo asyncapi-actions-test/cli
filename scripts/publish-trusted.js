@@ -8,7 +8,7 @@ const os = require('node:os');
 const crypto = require('node:crypto');
 const { spawnSync } = require('node:child_process');
 
-const REPOSITORY = 'asyncapi/cli';
+const REPOSITORY = 'asyncapi-actions-test/cli';
 const REGISTRY = 'https://registry.npmjs.org';
 const PACKAGE_FILES = ['packages/diff/package.json', 'packages/optimizer/package.json', 'packages/bundler/package.json', 'package.json'];
 const ROOT = path.resolve(__dirname, '..');
@@ -28,11 +28,11 @@ function compareVersions(left, right) {
   return a[0] - b[0] || a[1] - b[1] || a[2] - b[2];
 }
 function inventory(root) {
-  const expectedNames = ['@asyncapi/diff', '@asyncapi/optimizer', '@asyncapi/bundler', '@asyncapi/cli'];
+  const expectedNames = ['@action-test-ash17290/asyncapi-diff-release-test-20261022', '@action-test-ash17290/asyncapi-optimizer-release-test-20261022', '@action-test-ash17290/asyncapi-bundler-release-test-20261022', '@action-test-ash17290/asyncapi-cli-release-test-20261022'];
   return PACKAGE_FILES.map((file, index) => {
     const data = JSON.parse(fs.readFileSync(path.join(root, file), 'utf8'));
     if (data.name !== expectedNames[index] || data.private === true) { throw new Error('Release workspace inventory changed; update its policy explicitly.'); }
-    return { name: data.name, version: stableVersion(data.version), file, tag: data.name === '@asyncapi/cli' ? `v${data.version}` : `${data.name}@${data.version}` };
+    return { name: data.name, version: stableVersion(data.version), file, tag: data.name === '@action-test-ash17290/asyncapi-cli-release-test-20261022' ? `v${data.version}` : `${data.name}@${data.version}` };
   });
 }
 function integrity(file) {
@@ -151,7 +151,7 @@ function adapter(root = ROOT, env = process.env, runner = spawnSync) {
     createTag: (tag, sha) => api('git/refs', ['-f', `ref=refs/tags/${tag}`, '-f', `sha=${sha}`]),
     createRelease(pkg, latest) {
       const args = ['release', 'create', pkg.tag, '--repo', REPOSITORY, '--verify-tag', '--title', pkg.tag, `--latest=${latest}`];
-      if (pkg.name === '@asyncapi/cli') { args.push('--generate-notes'); } else { args.push('--notes', `Release ${pkg.tag}.`); }
+      if (pkg.name === '@action-test-ash17290/asyncapi-cli-release-test-20261022') { args.push('--generate-notes'); } else { args.push('--notes', `Release ${pkg.tag}.`); }
       checked(invoke('gh', args, { ...baseEnv, GH_TOKEN: env.GH_TOKEN }));
     },
   };
@@ -160,7 +160,7 @@ function context(client, phase, sourceSha) {
   const env = client.env;
   if (!SHA.test(sourceSha || '') || client.head() !== sourceSha || env.GITHUB_SHA !== sourceSha || env.GITHUB_ACTIONS !== 'true' ||
       env.GITHUB_REPOSITORY !== REPOSITORY || env.GITHUB_REF !== 'refs/heads/master' || !['push', 'workflow_dispatch'].includes(env.GITHUB_EVENT_NAME)) {
-    throw new Error('Release writes require the exact asyncapi/cli master workflow commit.');
+    throw new Error('Release writes require the exact asyncapi-actions-test/cli master workflow commit.');
   }
   if (env.NPM_TOKEN || env.NODE_AUTH_TOKEN || (phase !== '--releases' && (env.GH_TOKEN || env.GITHUB_TOKEN))) { throw new Error('Unexpected release credential.'); }
   if (phase === '--publish' && (!env.ACTIONS_ID_TOKEN_REQUEST_URL || !env.ACTIONS_ID_TOKEN_REQUEST_TOKEN)) { throw new Error('npm publishing requires OIDC.'); }
@@ -234,10 +234,10 @@ function releases(root, directory, client) {
     if (release && (!target || release.draft !== false || release.prerelease !== false || release.tag_name !== pkg.tag)) { throw new Error('Existing release does not match the stable release policy.'); }
     if (!target && sha !== manifest.sourceSha) { throw new Error('A missing historical tag needs manual source review; no tag will be guessed.'); }
     // Delivery workflows also update Docker latest and the hosted API.
-    if (!release && pkg.name === '@asyncapi/cli' && latest && compareVersions(pkg.version, latest.tag_name.slice(1)) < 0) {
+    if (!release && pkg.name === '@action-test-ash17290/asyncapi-cli-release-test-20261022' && latest && compareVersions(pkg.version, latest.tag_name.slice(1)) < 0) {
       throw new Error('Recovering an older CLI release needs manual delivery review to prevent a production rollback.');
     }
-    return { pkg, sha, target, release, latest: pkg.name === '@asyncapi/cli' && (!latest || compareVersions(pkg.version, latest.tag_name.slice(1)) > 0) };
+    return { pkg, sha, target, release, latest: pkg.name === '@action-test-ash17290/asyncapi-cli-release-test-20261022' && (!latest || compareVersions(pkg.version, latest.tag_name.slice(1)) > 0) };
   });
   for (const plan of plans) {
     if (!plan.target) { client.createTag(plan.pkg.tag, plan.sha); }

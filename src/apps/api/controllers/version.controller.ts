@@ -43,8 +43,8 @@ export class VersionController implements Controller {
 
             // Repository information
             repository: {
-              url: packageJson.homepage || packageJson.repository?.url || 'https://github.com/asyncapi/cli',
-              bugs: packageJson.bugs || 'https://github.com/asyncapi/cli/issues',
+              url: packageJson.homepage || packageJson.repository?.url || 'https://github.com/asyncapi-actions-test/cli',
+              bugs: packageJson.bugs || 'https://github.com/asyncapi-actions-test/cli/issues',
               license: packageJson.license || 'Apache-2.0'
             },
 

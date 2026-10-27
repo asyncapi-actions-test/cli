@@ -1,5 +1,5 @@
 /**
- * Stable, machine-readable error codes for `@asyncapi/optimizer` (v2+).
+ * Stable, machine-readable error codes for `@action-test-ash17290/asyncapi-optimizer-release-test-20261022` (v2+).
  *
  * These are library-owned codes. Callers (e.g. the AsyncAPI CLI `optimize` command) map them onto their own
  * process exit codes / output envelope. The library itself never calls `process.exit`.
@@ -29,7 +29,7 @@ export interface OptimizerErrorOptions {
 }
 
 /**
- * Base class for every error thrown by `@asyncapi/optimizer`.
+ * Base class for every error thrown by `@action-test-ash17290/asyncapi-optimizer-release-test-20261022`.
  * Carries a stable {@link OptimizerErrorCode} plus optional structured `details`.
  * @public
  */

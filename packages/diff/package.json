@@ -1,6 +1,6 @@
 {
-  "name": "@asyncapi/diff",
-  "version": "0.6.0",
+  "name": "@action-test-ash17290/asyncapi-diff-release-test-20261022",
+  "version": "90.0.0",
   "description": "Library that compares two AsyncAPI documents and reports breaking, non-breaking, and unclassified changes.",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/asyncapi/cli.git",
+    "url": "git+https://github.com/asyncapi-actions-test/cli.git",
     "directory": "packages/diff"
   },
   "keywords": [
@@ -30,9 +30,9 @@
   "author": "aayushmau5",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/asyncapi/cli/issues"
+    "url": "https://github.com/asyncapi-actions-test/cli/issues"
   },
-  "homepage": "https://github.com/asyncapi/cli/tree/master/packages/diff#readme",
+  "homepage": "https://github.com/asyncapi-actions-test/cli/tree/master/packages/diff#readme",
   "publishConfig": {
     "access": "public"
   },

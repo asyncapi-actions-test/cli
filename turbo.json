@@ -2,9 +2,9 @@
   "$schema": "https://turbo.build/schema.json",
   "tasks": {
     "build": { "cache": false },
-    "@asyncapi/optimizer#build": { "cache": false },
-    "@asyncapi/diff#build": { "cache": false },
-    "@asyncapi/bundler#build": { "cache": false },
+    "@action-test-ash17290/asyncapi-optimizer-release-test-20261022#build": { "cache": false },
+    "@action-test-ash17290/asyncapi-diff-release-test-20261022#build": { "cache": false },
+    "@action-test-ash17290/asyncapi-bundler-release-test-20261022#build": { "cache": false },
     "test": { "cache": false, "dependsOn": ["build"] },
     "lint": { "cache": false }
   }
