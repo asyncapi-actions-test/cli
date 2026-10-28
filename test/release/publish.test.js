@@ -154,7 +154,8 @@ test('tampered artifacts, conflicting npm identities and newer npm Latest stop b
 test('delayed npm visibility is retried without publishing the package again', async (t) => {
   const release = packed(t);
   const registry = release.client.registry;
-  let missingReads = 2;
+  // Registry visibility can lag beyond the original 30-second retry window.
+  let missingReads = 8;
   release.client.registry = (pkg) => {
     const current = registry(pkg);
     if (pkg.name === release.packages[0].name && current && missingReads-- > 0) {
@@ -179,7 +180,7 @@ test('unconfirmed npm publication fails after bounded retries and holds back the
     }),
     /incomplete/,
   );
-  assert.ok(waits > 0 && waits <= 10);
+  assert.ok(waits > 0 && waits <= 24);
   assert.ok(release.records.has(release.packages[2].name));
   assert.equal(release.records.has(release.packages[3].name), false);
 });
