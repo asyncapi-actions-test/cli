@@ -1,5 +1,11 @@
 # @asyncapi/bundler
 
+## 90.3.0
+
+### Minor Changes
+
+- 170432e: Verify native Changesets publishing with a diff major, bundler minor and CLI patch release.
+
 ## 90.2.0
 
 ### Minor Changes
