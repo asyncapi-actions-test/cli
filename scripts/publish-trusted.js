@@ -7,6 +7,7 @@ const path = require('node:path');
 const os = require('node:os');
 const crypto = require('node:crypto');
 const { spawnSync } = require('node:child_process');
+const { setTimeout: delay } = require('node:timers/promises');
 
 const REPOSITORY = 'asyncapi-actions-test/cli';
 const REGISTRY = 'https://registry.npmjs.org';
@@ -99,7 +100,7 @@ function adapter(root = ROOT, env = process.env, runner = spawnSync) {
     env, head: () => git(['rev-parse', 'HEAD']),
     clean: () => { git(['diff', '--exit-code', 'HEAD']); if (git(['status', '--porcelain', '--untracked-files=all'])) { throw new Error('Release packing requires a clean source checkout.'); } },
     registry(pkg) {
-      const result = npm(['view', `${pkg.name}@${pkg.version}`, '--json']);
+      const result = npm(['view', `${pkg.name}@${pkg.version}`, '--json', '--prefer-online']);
       let data;
       try { data = JSON.parse(result.stdout); } catch { throw new Error('Unreadable npm response.'); }
       if (!result.error && !result.signal && result.status !== 0 && data?.error?.code === 'E404') { return null; }
@@ -187,7 +188,8 @@ function readManifest(root, directory, client, phase) {
 }
 function assertPublished(pkg, actual, sourceSha) {
   const expected = pkg.published || { gitHead: sourceSha, integrity: pkg.integrity };
-  if (!actual || actual.gitHead !== expected.gitHead || actual.integrity !== expected.integrity) { throw new Error(`Publication is incomplete or conflicts with ${pkg.name}@${pkg.version}.`); }
+  if (!actual) { throw new Error(`Publication is incomplete: ${pkg.name}@${pkg.version} is not visible on npm.`); }
+  if (actual.gitHead !== expected.gitHead || actual.integrity !== expected.integrity) { throw new Error(`Publication conflicts with ${pkg.name}@${pkg.version}.`); }
 }
 function pack(root, directory, client) {
   const sourceSha = client.head();
@@ -203,22 +205,46 @@ function pack(root, directory, client) {
   });
   fs.writeFileSync(path.join(directory, 'manifest.json'), `${JSON.stringify({ sourceSha, packages }, null, 2) }\n`);
 }
-function publish(root, directory, client) {
+async function confirmPublication(pkg, sourceSha, client, wait) {
+  // A successful npm publish can precede registry read visibility.
+  for (let attempt = 0; ; attempt++) {
+    const current = client.registry(pkg);
+    if (current || attempt === 6) {
+      assertPublished(pkg, current, sourceSha);
+      return;
+    }
+    await wait(5000);
+  }
+}
+async function publish(root, directory, client, wait = delay) {
   const manifest = readManifest(root, directory, client, '--publish');
   const pending = [];
   for (const pkg of manifest.packages) {
     const current = client.registry(pkg);
-    if (current) { assertPublished(pkg, current, manifest.sourceSha); } else {
-      if (pkg.published) { throw new Error('An existing npm publication disappeared.'); }
-      const latest = client.latest(pkg);
-      if (latest && compareVersions(pkg.version, latest) < 0) { throw new Error('Refusing to move npm latest backwards.'); }
-      pending.push(pkg);
+    if (current) {
+      assertPublished(pkg, current, manifest.sourceSha);
+      console.log(`Already published and verified: ${pkg.name}@${pkg.version}`);
+      continue;
+    }
+    if (pkg.published) { throw new Error('An existing npm publication disappeared.'); }
+    const latest = client.latest(pkg);
+    if (latest && compareVersions(pkg.version, latest) < 0) { throw new Error('Refusing to move npm latest backwards.'); }
+    pending.push(pkg);
+  }
+  const failures = [];
+  for (const pkg of pending) {
+    // The libraries are independent; the CLI requires all of them.
+    if (pkg.file === 'package.json' && failures.length) { break; }
+    try {
+      console.log(`Publishing: ${pkg.name}@${pkg.version}`);
+      client.publish(tarballPath(directory, pkg.tarball));
+      await confirmPublication(pkg, manifest.sourceSha, client, wait);
+      console.log(`Published and verified: ${pkg.name}@${pkg.version}`);
+    } catch (error) {
+      failures.push(`${pkg.name}@${pkg.version}: ${error.message}`);
     }
   }
-  for (const pkg of pending) {
-    client.publish(tarballPath(directory, pkg.tarball));
-    assertPublished(pkg, client.registry(pkg), manifest.sourceSha);
-  }
+  if (failures.length) { throw new Error(`npm publication failed; CLI and GitHub releases are held back:\n${failures.join('\n')}`); }
 }
 function releases(root, directory, client) {
   const manifest = readManifest(root, directory, client, '--releases');
@@ -244,7 +270,7 @@ function releases(root, directory, client) {
     if (!plan.release) { client.createRelease(plan.pkg, plan.latest); }
   }
 }
-function main(args = process.argv.slice(2)) {
+async function main(args = process.argv.slice(2)) {
   const client = adapter();
   if (args.length === 0 || (args.length === 1 && args[0] === '--plan')) {
     console.log(JSON.stringify(inventory(ROOT).map(pkg => ({ ...pkg, published: !!client.registry(pkg) })), null, 2));
@@ -252,7 +278,7 @@ function main(args = process.argv.slice(2)) {
   }
   if (args.length !== 2 || !['--pack', '--publish', '--releases'].includes(args[0])) { throw new Error('Usage: publish-trusted.js [--plan | --pack directory | --publish directory | --releases directory]'); }
   const directory = path.resolve(args[1]);
-  ({ '--pack': pack, '--publish': publish, '--releases': releases })[args[0]](ROOT, directory, client);
+  await ({ '--pack': pack, '--publish': publish, '--releases': releases })[args[0]](ROOT, directory, client);
 }
 module.exports = { inventory, stableVersion, compareVersions, adapter, context, pack, publish, releases, readManifest, integrity, assertPublished, npmCli };
-if (require.main === module) { try { main(); } catch (error) { console.error(error.message); process.exitCode = 1; } }
+if (require.main === module) { main().catch(error => { console.error(error.message); process.exitCode = 1; }); }
