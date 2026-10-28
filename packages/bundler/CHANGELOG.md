@@ -1,5 +1,11 @@
 # @asyncapi/bundler
 
+## 90.2.0
+
+### Minor Changes
+
+- d5757a2: Verify npm acknowledgement with a diff major, bundler minor and CLI patch release.
+
 ## 90.1.0
 
 ### Minor Changes

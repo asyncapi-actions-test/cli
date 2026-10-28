@@ -1,5 +1,11 @@
 # @asyncapi/diff
 
+## 91.0.0
+
+### Major Changes
+
+- d5757a2: Verify npm acknowledgement with a diff major, bundler minor and CLI patch release.
+
 ## 90.1.0
 
 ### Minor Changes
