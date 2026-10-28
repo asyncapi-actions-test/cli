@@ -1,5 +1,14 @@
 # @asyncapi/cli
 
+## 90.0.4
+
+### Patch Changes
+
+- 170432e: Verify native Changesets publishing with a diff major, bundler minor and CLI patch release.
+- Updated dependencies [170432e]
+  - @action-test-ash17290/asyncapi-diff-release-test-20261022@92.0.0
+  - @action-test-ash17290/asyncapi-bundler-release-test-20261022@90.3.0
+
 ## 90.0.3
 
 ### Patch Changes

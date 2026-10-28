@@ -1,5 +1,11 @@
 # @asyncapi/diff
 
+## 92.0.0
+
+### Major Changes
+
+- 170432e: Verify native Changesets publishing with a diff major, bundler minor and CLI patch release.
+
 ## 91.0.0
 
 ### Major Changes

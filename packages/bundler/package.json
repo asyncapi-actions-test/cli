@@ -1,6 +1,6 @@
 {
   "name": "@action-test-ash17290/asyncapi-bundler-release-test-20261022",
-  "version": "90.2.0",
+  "version": "90.3.0",
   "description": "Bundle references from a single AsyncAPI document into a single file.",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
