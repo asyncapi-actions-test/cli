@@ -1,5 +1,14 @@
 # @asyncapi/cli
 
+## 90.0.3
+
+### Patch Changes
+
+- d5757a2: Verify npm acknowledgement with a diff major, bundler minor and CLI patch release.
+- Updated dependencies [d5757a2]
+  - @action-test-ash17290/asyncapi-diff-release-test-20261022@91.0.0
+  - @action-test-ash17290/asyncapi-bundler-release-test-20261022@90.2.0
+
 ## 90.0.2
 
 ### Patch Changes
