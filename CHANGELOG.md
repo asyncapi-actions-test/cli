@@ -1,5 +1,14 @@
 # @asyncapi/cli
 
+## 90.0.2
+
+### Patch Changes
+
+- 585706d: Verify a mixed sandbox release with diff and bundler minor updates and a CLI patch.
+- Updated dependencies [585706d]
+  - @action-test-ash17290/asyncapi-diff-release-test-20261022@90.1.0
+  - @action-test-ash17290/asyncapi-bundler-release-test-20261022@90.1.0
+
 ## 90.0.1
 
 ### Patch Changes
