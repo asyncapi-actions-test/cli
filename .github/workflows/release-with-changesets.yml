@@ -13,12 +13,14 @@ env:
 jobs:
   test:
     if: github.repository == 'asyncapi-actions-test/cli' && github.ref == 'refs/heads/master'
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
-    timeout-minutes: 45
+    # Sandbox only: suspend the matrix and tests while checking release behaviour.
+    # strategy:
+    #   fail-fast: false
+    #   matrix:
+    #     os: [ubuntu-latest, windows-latest]
+    # runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
     # The shared selector installs semver; reuse its output in publishing jobs.
     outputs:
       node-version: ${{ steps.lockversion.outputs.version }}
@@ -37,10 +39,10 @@ jobs:
         with:
           node-version: ${{ steps.lockversion.outputs.version }}
           package-manager-cache: false
-      - run: npm ci --ignore-scripts
-      - run: npm test
-      - if: matrix.os == 'ubuntu-latest'
-        run: npm run lint
+      # - run: npm ci --ignore-scripts
+      # - run: npm test
+      # - if: matrix.os == 'ubuntu-latest'
+      #   run: npm run lint
 
   version-pr:
     needs: test
