@@ -1,5 +1,11 @@
 # @asyncapi/diff
 
+## 90.1.0
+
+### Minor Changes
+
+- 585706d: Verify a mixed sandbox release with diff and bundler minor updates and a CLI patch.
+
 ## 90.0.1
 
 ### Patch Changes

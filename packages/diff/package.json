@@ -1,6 +1,6 @@
 {
   "name": "@action-test-ash17290/asyncapi-diff-release-test-20261022",
-  "version": "90.0.1",
+  "version": "90.1.0",
   "description": "Library that compares two AsyncAPI documents and reports breaking, non-breaking, and unclassified changes.",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
