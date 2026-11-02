@@ -1,7 +1,7 @@
 {
   "name": "@action-test-ash17290/asyncapi-cli-release-test-20261022",
   "description": "All in one CLI for all AsyncAPI tools",
-  "version": "90.0.5",
+  "version": "90.0.6",
   "author": "@asyncapi",
   "bin": {
     "asyncapi": "./bin/run_bin"
@@ -17,9 +17,9 @@
   ],
   "dependencies": {
     "@asyncapi/avro-schema-parser": "^3.1.0",
-    "@action-test-ash17290/asyncapi-bundler-release-test-20261022": "^90.4.0",
+    "@action-test-ash17290/asyncapi-bundler-release-test-20261022": "^90.5.0",
     "@asyncapi/converter": "^2.0.1",
-    "@action-test-ash17290/asyncapi-diff-release-test-20261022": "^93.0.0",
+    "@action-test-ash17290/asyncapi-diff-release-test-20261022": "^94.0.0",
     "@asyncapi/generator": "^3.2.0",
     "@asyncapi/modelina-cli": "^5.10.1",
     "@asyncapi/openapi-schema-parser": "^3.1.0",
@@ -156,7 +156,7 @@
     ],
     "warn-if-update-available": {
       "frequency": 24,
-      "message": "\n<%= chalk.yellow('\u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e') %>\n<%= chalk.yellow('\u2502                                                                \u2502') %>\n<%= chalk.yellow('\u2502') %>               Update available! <%= chalk.red(config.version) %> \u2192 <%= chalk.greenBright(latest) %>.                 <%= chalk.yellow('\u2502') %>\n<%= chalk.yellow('\u2502') %> <%= chalk.magentaBright('Changelog:') %> https://github.com/asyncapi-actions-test/cli/releases/tag/v<%= latest %> <%= chalk.yellow('\u2502') %>\n<%= chalk.yellow('\u2502') %>      Run \"<%= chalk.magentaBright('npm install -g @action-test-ash17290/asyncapi-cli-release-test-20261022@latest') %>\" to update.      <%= chalk.yellow('\u2502') %>\n<%= chalk.yellow('\u2502') %>                                                                <%= chalk.yellow('\u2502') %>\n<%= chalk.yellow('\u2570\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256f') %>",
+      "message": "\n<%= chalk.yellow('╭────────────────────────────────────────────────────────────────╮') %>\n<%= chalk.yellow('│                                                                │') %>\n<%= chalk.yellow('│') %>               Update available! <%= chalk.red(config.version) %> → <%= chalk.greenBright(latest) %>.                 <%= chalk.yellow('│') %>\n<%= chalk.yellow('│') %> <%= chalk.magentaBright('Changelog:') %> https://github.com/asyncapi-actions-test/cli/releases/tag/v<%= latest %> <%= chalk.yellow('│') %>\n<%= chalk.yellow('│') %>      Run \"<%= chalk.magentaBright('npm install -g @action-test-ash17290/asyncapi-cli-release-test-20261022@latest') %>\" to update.      <%= chalk.yellow('│') %>\n<%= chalk.yellow('│') %>                                                                <%= chalk.yellow('│') %>\n<%= chalk.yellow('╰────────────────────────────────────────────────────────────────╯') %>",
       "frequencyUnit": "hours"
     }
   },
