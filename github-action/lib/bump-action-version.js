@@ -46,7 +46,7 @@ function renderAction(templateText, version) {
   return rendered;
 }
 
-function validateActionBinding(root = ROOT, expectedVersion) {
+function validateActionBinding(expectedVersion, root = ROOT) {
   const version = stableVersion(expectedVersion || JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8')).version);
   const templateText = fs.readFileSync(path.join(root, 'action-template.yml'), 'utf8');
   const currentText = fs.readFileSync(path.join(root, 'action.yml'), 'utf8');
@@ -63,7 +63,7 @@ function bumpActionVersion({ root = ROOT, previousVersion } = {}) {
   const template = fs.readFileSync(path.join(root, 'action-template.yml'), 'utf8');
   const current = parseAction(oldText);
   const previous = stableVersion(previousVersion || current.runs.image.slice(IMAGE.length));
-  validateActionBinding(root, previous);
+  validateActionBinding(previous, root);
   const rendered = renderAction(template, version);
   const updated = parseAction(rendered);
   const oldContract = { ...current, runs: { ...current.runs, image: updated.runs.image } };
@@ -82,31 +82,12 @@ function bumpActionVersion({ root = ROOT, previousVersion } = {}) {
   } finally {
     if (created && fs.existsSync(temporary)) {fs.unlinkSync(temporary);}
   }
-  validateActionBinding(root, version);
+  validateActionBinding(version, root);
   return { changed: true, version };
 }
 
-function npmCli() {
-  const binary = path.dirname(process.execPath);
-  const candidates = [
-    path.resolve(binary, '../lib/node_modules/npm/bin/npm-cli.js'),
-    path.join(binary, 'node_modules/npm/bin/npm-cli.js'),
-  ];
-  const homebrew = process.execPath.match(/^(\/opt\/homebrew|\/usr\/local)\/Cellar\//);
-  if (homebrew) {
-    candidates.push(`${homebrew[1]}/lib/node_modules/npm/bin/npm-cli.js`);
-  }
-  if (binary === '/usr/bin') {
-    candidates.push('/usr/share/nodejs/npm/bin/npm-cli.js');
-  }
-  const cli = candidates.find((file) => fs.existsSync(file));
-  if (!cli) {
-    throw new Error('Use a Node installation with bundled npm 11.5.1 or newer.');
-  }
-  return cli;
-}
-
 function refreshLock(root = ROOT, env = process.env) {
+  const { npmCli } = require('../../scripts/publish-trusted');
   const { spawnSync } = require('node:child_process');
   // npm run prepends project binaries to PATH; use the Node installation's npm.
   const result = spawnSync(process.execPath, [npmCli(), 'install', '--package-lock-only', '--ignore-scripts', '--no-audit', '--no-fund'],

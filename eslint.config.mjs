@@ -216,18 +216,8 @@ export default [
     },
   },
   {
-    files: ['scripts/publish-trusted.js', 'github-action/lib/bump-action-version.js', 'test/release/**/*.js'],
+    files: ['scripts/publish-trusted.js', 'github-action/lib/bump-action-version.js'],
     languageOptions: { sourceType: 'commonjs' },
     rules: { '@typescript-eslint/no-require-imports': 'off' },
   },
-  {
-    files: ['test/release/**/*.js'],
-    rules: {
-      'sonarjs/no-duplicate-string': 'off',
-      'security/detect-object-injection': 'off',
-      'max-nested-callbacks': 'off',
-      'sonarjs/cognitive-complexity': 'off',
-    },
-  },
-
 ];
