@@ -1,5 +1,14 @@
 # @asyncapi/cli
 
+## 90.0.5
+
+### Patch Changes
+
+- d1f2913: Verify partial npm publication and GitHub release recovery across failed-job retries and a full workflow rerun.
+- Updated dependencies [d1f2913]
+  - @action-test-ash17290/asyncapi-diff-release-test-20261022@93.0.0
+  - @action-test-ash17290/asyncapi-bundler-release-test-20261022@90.4.0
+
 ## 90.0.4
 
 ### Patch Changes

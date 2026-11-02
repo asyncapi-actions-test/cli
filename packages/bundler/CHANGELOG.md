@@ -1,5 +1,11 @@
 # @asyncapi/bundler
 
+## 90.4.0
+
+### Minor Changes
+
+- d1f2913: Verify partial npm publication and GitHub release recovery across failed-job retries and a full workflow rerun.
+
 ## 90.3.0
 
 ### Minor Changes
