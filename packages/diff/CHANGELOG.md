@@ -1,5 +1,11 @@
 # @asyncapi/diff
 
+## 93.0.0
+
+### Major Changes
+
+- d1f2913: Verify partial npm publication and GitHub release recovery across failed-job retries and a full workflow rerun.
+
 ## 92.0.0
 
 ### Major Changes
