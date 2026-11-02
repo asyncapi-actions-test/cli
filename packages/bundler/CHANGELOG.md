@@ -1,5 +1,11 @@
 # @asyncapi/bundler
 
+## 90.5.0
+
+### Minor Changes
+
+- 978dee6: Verify dynamic workspace releases with Turbo builds.
+
 ## 90.4.0
 
 ### Minor Changes

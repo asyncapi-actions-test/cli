@@ -1,5 +1,14 @@
 # @asyncapi/cli
 
+## 90.0.6
+
+### Patch Changes
+
+- 978dee6: Verify dynamic workspace releases with Turbo builds.
+- Updated dependencies [978dee6]
+  - @action-test-ash17290/asyncapi-diff-release-test-20261022@94.0.0
+  - @action-test-ash17290/asyncapi-bundler-release-test-20261022@90.5.0
+
 ## 90.0.5
 
 ### Patch Changes

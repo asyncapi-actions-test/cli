@@ -1,5 +1,11 @@
 # @asyncapi/diff
 
+## 94.0.0
+
+### Major Changes
+
+- 978dee6: Verify dynamic workspace releases with Turbo builds.
+
 ## 93.0.0
 
 ### Major Changes
